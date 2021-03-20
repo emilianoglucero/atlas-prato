@@ -8,7 +8,12 @@ class Server {
         this.app    = express();
         this.port   = process.env.PORT;
         this.server = require('http').createServer(this.app);
-        this.io     = require('socket.io')(this.server);
+        this.io     = require('socket.io')(this.server, {
+            cors: {
+              origin: "http://localhost:8000",
+              methods: ["GET", "POST"]
+            }
+        });
 
         this.paths = {}
 
@@ -33,7 +38,8 @@ class Server {
         this.app.use( cors() );
 
         // Directorio Público
-        this.app.use( express.static('public') );
+         this.app.use( express.static('atlas-prato-static-client') );
+        //this.app.use( express.static('public') );
 
     }
 

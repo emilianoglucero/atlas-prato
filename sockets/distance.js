@@ -26,7 +26,8 @@ const socketDistance = (socket) => {
             const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
             //console.log(diff / 2 / MICROSECDONDS_PER_CM);
             distance = diff / 2 / MICROSECDONDS_PER_CM;
-            console.log(distance)
+            //console.log(distance)
+            socket.emit('distance', distance);
             }
         });
         };
@@ -35,21 +36,22 @@ const socketDistance = (socket) => {
 
         // Trigger a distance measurement once per second
         setInterval(() => {
-        trigger.trigger(10, 1); // Set trigger high for 10 microseconds
+            trigger.trigger(10, 1); // Set trigger high for 10 microseconds
         }, 1000);
 
     // gpio code end
 
     console.log('cliente conectado');
-    console.log(distance);
+    //console.log(distance);
 
     socket.on('disconnect', () => {
         console.log('Cliente desconectado');
     })
 
-    setInterval(() => {
-        socket.emit('distance', distance);
-    }, 1000);
+    // setInterval(() => {
+    //     console.log(distance);
+    //     socket.emit('distance', distance);
+    // }, 1000);
 
     //socket.emit('distance', distance);
 
